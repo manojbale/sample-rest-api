@@ -1,0 +1,1 @@
+INSERT INTO Todo (id, description, details, done BIT) values (1, "test", "merc benz", null);
