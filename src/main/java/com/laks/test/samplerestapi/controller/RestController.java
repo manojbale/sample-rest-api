@@ -4,8 +4,11 @@ import com.laks.test.samplerestapi.repo.AzureRepository;
 import com.laks.test.samplerestapi.repo.Todo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
 @RequiredArgsConstructor
@@ -16,22 +19,33 @@ public class RestController {
 
     @GetMapping("/getData")
     public String getData() {
-        log.info("data from table - ", azureRepository.findAll().get(0));
-        return azureRepository.findAll().toString();
-//        return "index";
+        List<Todo> all = azureRepository.findAll();
+        log.info("data from table - ", all.size());
+        if (all.isEmpty()) {
+            return "no data found";
+        } else return all.toString();
+
     }
 
     @GetMapping("/postData/{id}")
-    public String postData(@PathVariable int id) {
+    public String postData(@PathVariable String id) {
         Todo todo = new Todo();
-        todo.setId(Long.valueOf(id));
-        todo.setDescription("hello");
-        todo.setDetails("hello");
-        todo.setDone(true);
+        todo.setDescription("hello" + id);
+        todo.setDetails("hello" + id);
+        todo.setDone("true");
 
         azureRepository.save(todo);
         log.info("data from table - ", azureRepository.findAll().size());
         return azureRepository.findAll().toString();
-//        return "index";
+
+    }
+
+    @DeleteMapping("/deleteAll")
+    public void deleteAll() {
+        log.info("{} of records will be deleted from table", azureRepository.findAll().size());
+
+        azureRepository.deleteAll();
+        log.info("all records are deleted from table - ");
+
     }
 }

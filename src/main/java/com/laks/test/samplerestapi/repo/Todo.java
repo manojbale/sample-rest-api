@@ -1,10 +1,7 @@
 package com.laks.test.samplerestapi.repo;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -13,7 +10,8 @@ import lombok.Data;
 public class Todo {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "description")
@@ -23,6 +21,6 @@ public class Todo {
     private String details;
 
     @Column(name = "done")
-    private boolean done;
+    private String done;
 
 }
