@@ -30,8 +30,8 @@ public class RestController {
     @GetMapping("/postData/{id}")
     public String postData(@PathVariable String id) {
         Todo todo = new Todo();
-        todo.setDescription("hello" + id);
-        todo.setDetails("hello" + id);
+        todo.setDescription("" + id);
+        todo.setDetails("" + id);
         todo.setDone("true");
 
         azureRepository.save(todo);
